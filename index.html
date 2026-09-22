@@ -1,0 +1,365 @@
+<title>架空の商店街</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+  :root {
+    --ground: #F2F1EE;
+    --surface: #FFFFFF;
+    --ink: #17181A;
+    --muted: #6A6F73;
+    --faint: #9AA0A4;
+    --line: #DCDAD5;
+    --accent: #B33A2B;
+    --accent-soft: #F3E3E0;
+    --shadow: 0 1px 2px rgba(23,24,26,.06), 0 8px 24px rgba(23,24,26,.06);
+
+    --display: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+    --body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #131416;
+      --surface: #1B1D1F;
+      --ink: #ECEBE8;
+      --muted: #9CA2A7;
+      --faint: #70767B;
+      --line: #2C2F32;
+      --accent: #E2705E;
+      --accent-soft: #331F1B;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #131416;
+    --surface: #1B1D1F;
+    --ink: #ECEBE8;
+    --muted: #9CA2A7;
+    --faint: #70767B;
+    --line: #2C2F32;
+    --accent: #E2705E;
+    --accent-soft: #331F1B;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding-inline: 20px;
+    padding-block: 0;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: var(--accent); }
+
+  /* ---- header ---- */
+  header { padding-block: 72px 44px; }
+  .eyebrow {
+    font-size: 12px; letter-spacing: .16em; color: var(--faint);
+    text-transform: uppercase; margin: 0 0 20px;
+  }
+  h1 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(38px, 8vw, 66px); line-height: 1.18;
+    letter-spacing: .02em; margin: 0 0 22px; text-wrap: balance;
+  }
+  .lede {
+    font-size: clamp(16px, 2.4vw, 19px); color: var(--muted);
+    max-width: 34em; margin: 0;
+  }
+  .lede strong { color: var(--ink); font-weight: 500; }
+
+  /* ---- notice ---- */
+  .notice {
+    display: flex; gap: 14px; align-items: flex-start;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    padding: 16px 18px; margin-block: 40px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .notice p { margin: 0; font-size: 14.5px; line-height: 1.75; }
+  .notice .tag {
+    font-family: var(--display); font-weight: 700; color: var(--accent);
+    font-size: 14.5px; white-space: nowrap; line-height: 1.75;
+  }
+
+  /* ---- sections ---- */
+  section { padding-block: 64px 0; }
+  h2 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(24px, 4vw, 32px); line-height: 1.4;
+    margin: 0 0 10px; letter-spacing: .02em;
+  }
+  .sub { color: var(--muted); font-size: 15px; margin: 0 0 32px; max-width: 36em; }
+
+  /* ---- gallery ---- */
+  figure { margin: 0; }
+  .shot {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 3px; overflow: hidden; box-shadow: var(--shadow);
+  }
+  .shot img { width: 100%; height: auto; }
+  figcaption { padding: 18px 20px 20px; }
+  .cap-head {
+    display: flex; flex-wrap: wrap; align-items: baseline;
+    gap: 10px; margin-bottom: 10px;
+  }
+  .cap-title { font-family: var(--display); font-weight: 700; font-size: 19px; line-height: 1.4; }
+  .cap-use {
+    font-size: 11.5px; letter-spacing: .08em; color: var(--accent);
+    border: 1px solid currentColor; border-radius: 2px;
+    padding: 1px 7px; line-height: 1.7;
+  }
+  .defects { margin: 0 0 14px; padding: 0; list-style: none;
+    display: flex; flex-wrap: wrap; gap: 6px; }
+  .defects li {
+    font-size: 12px; color: var(--muted); line-height: 1.6;
+    border: 1px solid var(--line); border-radius: 2px;
+    padding: 1px 8px; background: var(--ground);
+  }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline;
+    font-size: 12.5px; color: var(--faint);
+    border-top: 1px solid var(--line); padding-top: 12px;
+  }
+  .meta span { font-variant-numeric: tabular-nums; }
+  .meta a { text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 28px; align-items: start; margin-top: 28px;
+  }
+  @media (max-width: 720px) { .grid { grid-template-columns: 1fr; gap: 24px; } }
+
+  /* ---- recipe ---- */
+  .rule-lead {
+    font-family: var(--display); font-size: clamp(20px, 3.4vw, 26px);
+    line-height: 1.6; margin: 0 0 28px; max-width: 24em;
+  }
+  .rule-lead em { font-style: normal; color: var(--accent); }
+  .tbl-scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 440px; font-size: 14.5px; }
+  th, td { text-align: left; padding: 11px 14px 11px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-weight: 700; color: var(--faint); font-size: 12px; letter-spacing: .1em; padding-bottom: 8px; }
+  td:first-child { font-weight: 500; white-space: nowrap; padding-right: 24px; }
+  td:last-child { color: var(--muted); }
+
+  pre {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 3px; padding: 16px 18px; overflow-x: auto;
+    font-family: var(--mono); font-size: 13px; line-height: 1.7;
+    margin: 20px 0 0; color: var(--ink);
+  }
+  .trap {
+    border: 1px solid var(--line); border-radius: 3px;
+    background: var(--surface); padding: 20px 22px; margin-top: 28px;
+  }
+  .trap h3 {
+    font-family: var(--display); font-size: 17px; margin: 0 0 8px; font-weight: 700;
+  }
+  .trap p { margin: 0 0 10px; font-size: 14.5px; color: var(--muted); }
+  .trap p:last-child { margin-bottom: 0; }
+
+  /* ---- terms ---- */
+  .terms { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 40px; margin-top: 24px; }
+  @media (max-width: 720px) { .terms { grid-template-columns: 1fr; } }
+  .terms div { border-top: 2px solid var(--ink); padding-top: 14px; margin-top: 24px; }
+  .terms h3 { font-family: var(--display); font-size: 16px; margin: 0 0 6px; font-weight: 700; }
+  .terms p { margin: 0; font-size: 14px; color: var(--muted); }
+
+  footer {
+    margin-top: 80px; border-top: 1px solid var(--line);
+    padding-block: 28px 64px; font-size: 13px; color: var(--faint);
+  }
+  footer p { margin: 0 0 6px; }
+</style>
+
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">無料素材 ／ 全5点</p>
+    <h1>架空の商店街</h1>
+    <p class="lede">どこにも実在しない喫茶店、焙煎所、美容室、治療院、駄菓子屋の写真です。<strong>すべてAIで作りました。</strong>「載せる写真がない」という理由だけでホームページを諦めていた人が、まず1枚置くために配っています。</p>
+
+    <div class="notice">
+      <span class="tag">はじめに</span>
+      <p>この5枚に写っている店・商品は<strong>実在しません</strong>。見本サイトや練習用の仮置きとしては自由に使えますが、実在するお店の「うちの商品」としては使わないでください。お客さんが見るのは、その店に本当にあるものの写真であるべきです。</p>
+    </div>
+  </header>
+
+  <section id="photos">
+    <h2>5枚</h2>
+    <p class="sub">それぞれ、実写に見せるために何の「粗」を指定したかを併記しています。きれいに作るより、ここを指定するほうが効きます。</p>
+
+    <figure class="shot">
+      <img src="images/01_minikeshi.jpg" alt="透明な袋に入った、たくさんのミニ消しゴム。指先が1つをつまもうとしている。" width="1024" height="1024">
+      <figcaption>
+        <div class="cap-head">
+          <span class="cap-title">ミニけし</span>
+          <span class="cap-use">文具・雑貨・駄菓子屋</span>
+        </div>
+        <ul class="defects">
+          <li>印刷ズレ</li><li>ビニールのシワ</li><li>静電気で張り付く</li><li>粉と削れ</li><li>袋の中の空気</li><li>つまむ指先</li>
+        </ul>
+        <div class="meta">
+          <span>1024 × 1024</span>
+          <span>JPEG</span>
+          <a href="images/01_minikeshi.jpg" target="_blank" rel="noopener">原寸で開く</a>
+        </div>
+      </figcaption>
+    </figure>
+
+    <div class="grid">
+
+      <figure class="shot">
+        <img src="images/02_coffee_beans.jpg" alt="クラフト紙の珈琲豆の袋と、その手前にこぼれた焙煎豆。" width="1536" height="1024">
+        <figcaption>
+          <div class="cap-head">
+            <span class="cap-title">そらまめ焙煎所</span>
+            <span class="cap-use">珈琲店・焙煎所</span>
+          </div>
+          <ul class="defects">
+            <li>紙の折れ</li><li>ラベルの貼りズレ</li><li>ラベル下の気泡</li><li>手押しスタンプのムラ</li><li>天板のコーヒー染み</li>
+          </ul>
+          <div class="meta">
+            <span>1536 × 1024</span><span>JPEG</span>
+            <a href="images/02_coffee_beans.jpg" target="_blank" rel="noopener">原寸で開く</a>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="shot">
+        <img src="images/03_cream_soda.jpg" alt="古い喫茶店のテーブルに置かれた、アイスクリームとさくらんぼの乗ったメロンクリームソーダ。" width="1024" height="1536">
+        <figcaption>
+          <div class="cap-head">
+            <span class="cap-title">クリームソーダ</span>
+            <span class="cap-use">喫茶店・カフェ</span>
+          </div>
+          <ul class="defects">
+            <li>グラスの結露</li><li>受け皿の水たまり</li><li>溶けはじめたアイス</li><li>曲がった紙ストロー</li><li>皿の貫入</li>
+          </ul>
+          <div class="meta">
+            <span>1024 × 1536</span><span>JPEG</span>
+            <a href="images/03_cream_soda.jpg" target="_blank" rel="noopener">原寸で開く</a>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="shot">
+        <img src="images/04_salon_tools.jpg" alt="畳んだタオルの上に置かれたカット鋏、すき鋏、カーボンコーム。" width="1536" height="1024">
+        <figcaption>
+          <div class="cap-head">
+            <span class="cap-title">鋏とコーム</span>
+            <span class="cap-use">美容室・理容室</span>
+          </div>
+          <ul class="defects">
+            <li>刃の細かい傷</li><li>指かけの摩耗</li><li>タオルに残った毛</li><li>畳みの崩れ</li><li>鋼の水滴痕</li>
+          </ul>
+          <div class="meta">
+            <span>1536 × 1024</span><span>JPEG</span>
+            <a href="images/04_salon_tools.jpg" target="_blank" rel="noopener">原寸で開く</a>
+          </div>
+        </figcaption>
+      </figure>
+
+      <figure class="shot">
+        <img src="images/05_seitai_room.jpg" alt="施術ベッドと畳んだタオル、丸椅子が置かれた治療院の施術室。人は写っていない。" width="1536" height="1024">
+        <figcaption>
+          <div class="cap-head">
+            <span class="cap-title">施術室</span>
+            <span class="cap-use">整体・整骨・治療院</span>
+          </div>
+          <ul class="defects">
+            <li>ベッドのシワと縫い目</li><li>タオルの不揃い</li><li>すりガラス越しの光</li><li>床のカゴ</li><li>人を入れない</li>
+          </ul>
+          <div class="meta">
+            <span>1536 × 1024</span><span>JPEG</span>
+            <a href="images/05_seitai_room.jpg" target="_blank" rel="noopener">原寸で開く</a>
+          </div>
+        </figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <section id="recipe">
+    <h2>作り方</h2>
+    <p class="sub">同じ手で、自分の業種の写真を作れます。特別なツールは要りません。</p>
+
+    <p class="rule-lead">AIっぽさは、<em>きれいすぎること</em>から来ます。だから、現物にある粗を名指しで指定します。</p>
+
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr><th>指定する粗</th><th>何が起きるか</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>印刷ズレ・インクのムラ</td><td>版ズレが再現され、量産品の安っぽさが出る</td></tr>
+          <tr><td>完全マットな素材</td><td>CG特有のテカリが消える</td></tr>
+          <tr><td>微細な粒子・粉・削れ</td><td>手に取られた痕跡が出て、使われている物になる</td></tr>
+          <tr><td>ビニールのシワ・曇り</td><td>透明素材がCGっぽさの最大の敵。シワで解決する</td></tr>
+          <tr><td>一部に入った空気</td><td>袋が平面でなく立体になる</td></tr>
+          <tr><td>シールのヨレ・気泡</td><td>機械でなく人が貼った感じが出る</td></tr>
+          <tr><td>結露・水たまり・溶け</td><td>時間が経っている＝その場に本当にあったことになる</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="sub" style="margin-top:32px">そして、AIの既定は「良く見せる」ほうに寄ります。逆向きに引っ張る禁止指定を必ず添えます。</p>
+
+<pre>avoid: glossy plastic rendering, luxurious finish,
+       perfectly flawless printing, studio perfection,
+       CGI gloss, any real brand or logo
+
+output: 実在する商品にしか見えないレベル</pre>
+
+    <div class="trap">
+      <h3>1回目で踏んだ落とし穴</h3>
+      <p>架空の会社名を指定しないと、AIはパッケージに<strong>実在する企業名</strong>を書きます。最初の生成で、実在する玩具メーカーの社名が入りました。架空の社名を名指しで指定し、実在名を禁止してください。</p>
+      <p>キャラクター物も既存キャラに寄ります。配る素材では、キャラクターを避けて食品・日用品・店の道具にするのが安全です。</p>
+    </div>
+
+    <div class="trap">
+      <h3>構図で一番効いたもの</h3>
+      <p><strong>指先が1つをつまもうとしている。</strong>これだけで、被写体が「撮影された商品」から「生活の中の物」に変わります。ほかに効いたのは、中身が少しこぼれていること、一部がフレームから切れていること、目立つ個体を1つだけ混ぜることでした。</p>
+    </div>
+  </section>
+
+  <section id="terms">
+    <h2>使っていいこと、だめなこと</h2>
+
+    <div class="terms">
+      <div>
+        <h3>見本サイトに使う</h3>
+        <p>いいです。架空の店の写真なので、架空の見本にはそのまま合います。</p>
+      </div>
+      <div>
+        <h3>練習・提案の仮置きに使う</h3>
+        <p>いいです。あとで実物の写真に差し替える前提なら問題ありません。</p>
+      </div>
+      <div>
+        <h3>表記・クレジット</h3>
+        <p>要りません。改変も自由です。連絡も不要です。</p>
+      </div>
+      <div>
+        <h3>実在する店の商品として出す</h3>
+        <p>だめです。売っていない物の写真を載せると、お客さんを騙すことになります。</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>画像5点はいずれもAIによる生成物です。写っている店名・商品名・社名はすべて架空で、実在するものとは関係ありません。</p>
+    <p>2026年9月</p>
+  </footer>
+
+</div>
